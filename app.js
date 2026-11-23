@@ -209,7 +209,8 @@
   }
 
   // ---------- boot ----------
-  fetch('questions.json').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  // 'no-cache' = revalidate with the server on every load, so updated questions show up immediately
+  fetch('questions.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(d => {
       BANK = d.questions || []; TITLE = d.title || TITLE; document.title = TITLE;
       const bad = BANK.filter(q => !q.id || !q.question || !q.options || !q.options[q.answer]);
